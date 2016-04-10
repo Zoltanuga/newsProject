@@ -11,6 +11,8 @@ public class ListNewsCommand implements Command {
 
 @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return ADD_NEWS_PAGE;
+
+    System.out.println("list news command");
+    return ADD_NEWS_PAGE;
     }
 }

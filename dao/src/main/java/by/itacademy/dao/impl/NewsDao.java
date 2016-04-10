@@ -16,6 +16,7 @@ public class NewsDao implements INewsDao {
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static NewsDao instance;
 
+
     public static synchronized NewsDao getInstance() {
         if (instance == null) {
             instance = new NewsDao();
@@ -29,22 +30,21 @@ public class NewsDao implements INewsDao {
     @Override
     public void addNews(News news) {
         Connection connection = null;
-        ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
 
         try {
             connection = connectionPool.getConnection();
-            threadLocal.set(connection);
+
             PreparedStatement prStatement = connection.prepareStatement(queries.getString("sqlInsertNews"));
             prStatement.setString(1, news.getHeader());
             prStatement.setDate(2, news.getDate());
             prStatement.setTime(3, news.getTime());
             prStatement.setString(4, news.getText());
             prStatement.executeUpdate();
-            connection.commit();
+            //connection.commit();
             log.info("success");
         } catch (SQLException e) {
-            try {
+           try {
                 if (connection != null) {
                     connection.rollback();
                 }
@@ -71,6 +71,7 @@ public class NewsDao implements INewsDao {
         Connection connection = null;
         ResultSet result;
         List<News> newsList = new ArrayList<>();
+
         try {
             connection = connectionPool.getConnection();
             PreparedStatement prStatement = connection.prepareStatement(queries.getString("sqlSelectSimpleNews"));
@@ -78,7 +79,7 @@ public class NewsDao implements INewsDao {
             result = prStatement.executeQuery();
             newsList = initNews(result);
         } catch (SQLException e) {
-            try {
+           try {
                 if (connection != null) {
                     connection.rollback();
                 }
@@ -131,7 +132,6 @@ public class NewsDao implements INewsDao {
                 log.error(e);
             }
         }
-
         return newsList;
     }
 

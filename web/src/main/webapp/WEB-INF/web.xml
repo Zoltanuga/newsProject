@@ -28,6 +28,7 @@
     <filter-name>SecondF</filter-name>
     <url-pattern>/Controller</url-pattern>
   </filter-mapping>
+
   <welcome-file-list>
     <welcome-file>pages/main.jsp</welcome-file>
   </welcome-file-list>
