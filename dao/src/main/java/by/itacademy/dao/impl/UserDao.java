@@ -11,20 +11,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**+
+ * dao layer for user entities
+ * singleton
+ * this is bad-style code because of  transaction handling must be transfer to SERVICE layer!!
+ */
 public class UserDao implements IUserDao {
     private ResourceBundle queries = ResourceBundle.getBundle("DatabaseResources");
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static Logger log = Logger.getLogger(UserDao.class);
     private static UserDao instance;
-    public static synchronized   UserDao getInstance(){
-        if (instance==null){
-            instance=new UserDao();
+
+    public static synchronized UserDao getInstance() {
+        if (instance == null) {
+            instance = new UserDao();
         }
         return instance;
     }
+
     private UserDao() {
     }
 
+    /**+
+     * add user to database
+     * @param user is user entity
+     */
     @Override
     public void addUser(User user) {
         Connection connection = null;
@@ -32,9 +43,9 @@ public class UserDao implements IUserDao {
             connection = connectionPool.getConnection();
             PreparedStatement prStatement = connection.prepareStatement(queries.getString("sqlInsertUser"));
             prStatement.setString(1, user.getEmail());
-            prStatement.setString(2, user.getName());
-            prStatement.setString(3, user.getSurname());
-            prStatement.setString(4, user.getPassword());
+            prStatement.setString(2, user.getPassword());
+            prStatement.setString(3, user.getName());
+            prStatement.setString(4, user.getSurname());
             prStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -48,18 +59,23 @@ public class UserDao implements IUserDao {
             }
             e.printStackTrace();
             log.error(e);
-        }finally {
-                try {
-                    if (connection != null) {
-                        connection.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    log.error(e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                log.error(e);
+            }
         }
     }
 
+    /**+
+     * get user from database
+     * @param email is parameter of search
+     * @return user that can be found by email parameter. (return Null-object if not found)
+     */
     @Override
     public User obtainUser(String email) {
         Connection connection = null;
@@ -83,7 +99,7 @@ public class UserDao implements IUserDao {
             }
             e.printStackTrace();
             log.error(e);
-        }finally {
+        } finally {
             try {
                 if (connection != null) {
                     connection.close();
@@ -96,6 +112,10 @@ public class UserDao implements IUserDao {
         return users.get(0);
     }
 
+    /**+
+     * get all users from database
+     * @return list of user-entities
+     */
     @Override
     public List<User> obtainUserList() {
         Connection connection = null;
@@ -119,7 +139,7 @@ public class UserDao implements IUserDao {
             }
             e.printStackTrace();
             log.error(e);
-        }finally {
+        } finally {
             try {
                 if (connection != null) {
                     connection.close();
@@ -132,6 +152,12 @@ public class UserDao implements IUserDao {
         return users;
     }
 
+    /**+
+     * convert ResultSet to List of user-entities
+     * @param result is ResultSet returned as result of execution of query to database
+     * @return list of user-entities
+     * @throws SQLException
+     */
     public List<User> initUser(ResultSet result) throws SQLException {
         List<User> userList = new ArrayList<>();
         while (result.next()) {

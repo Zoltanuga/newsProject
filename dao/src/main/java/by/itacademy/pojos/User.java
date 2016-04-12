@@ -2,18 +2,20 @@ package by.itacademy.pojos;
 
 public class User {
     private String email;
+    private String password;
     private String name;
     private String surname;
-    private String password;
+
 
     public User() {
     }
 
-    public User(String email, String name, String surname, String password) {
+    public User(String email, String password, String name, String surname) {
         this.email = email;
+        this.password = password;
         this.name = name;
         this.surname = surname;
-        this.password = password;
+
     }
 
     public String getEmail() {

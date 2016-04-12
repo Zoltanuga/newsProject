@@ -14,20 +14,20 @@
 
     <dependencies>
 
-    <dependency>
-        <groupId>commons-pool</groupId>
-        <artifactId>pool</artifactId>
-        <version>1.5.4</version>
-    </dependency>
-    <dependency>
-        <groupId>com.mysql.jdbc</groupId>
-        <artifactId>jdbc</artifactId>
-        <version>5.1.5</version>
-    </dependency>
-    <dependency>
-        <groupId>commons-dbcp</groupId>
-        <artifactId>dbcp</artifactId>
-        <version>1.4</version>
-    </dependency>
-</dependencies>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>pool</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql.jdbc</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>5.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+    </dependencies>
 </project>

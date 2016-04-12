@@ -10,14 +10,14 @@
     <h4><fmt:message key="addNewsPage.header"/></h4><br/>
 
     <fmt:message key="addNewsPage.titleInputHeader"/><br/>
-    <table  bgcolor="#f0f8ff">
+    <table bgcolor="#f0f8ff">
         <tr>
             <td><textarea name="header" cols="40" rows="1"></textarea></td>
         </tr>
     </table>
 
     <fmt:message key="addNewsPage.titleInputText"/><br/>
-    <table  bgcolor="#f0f8ff">
+    <table bgcolor="#f0f8ff">
         <tr>
             <td><textarea name="textNews" cols="40" rows="4"></textarea></td>
         </tr>

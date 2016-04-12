@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0"         xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-  <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>by.itacademy.controller.Controller</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern>/Controller</url-pattern>
-  </servlet-mapping>
-  <filter>
-    <filter-name>AuthFilter</filter-name>
-    <filter-class>by.itacademy.filters.AuthFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
-    <url-pattern>/Controller</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>SecondF</filter-name>
-    <filter-class>by.itacademy.filters.SecondFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>SecondF</filter-name>
-    <url-pattern>/Controller</url-pattern>
-  </filter-mapping>
+    <display-name>Archetype Created Web Application</display-name>
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>by.itacademy.controller.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>register</servlet-name>
+        <jsp-file>/pages/registerPage.jsp</jsp-file>
+    </servlet>
 
-  <welcome-file-list>
-    <welcome-file>pages/main.jsp</welcome-file>
-  </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>register</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>success</servlet-name>
+        <jsp-file>/pages/successPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>success</servlet-name>
+        <url-pattern>/success</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>main</servlet-name>
+        <jsp-file>/pages/main.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>main</servlet-name>
+        <url-pattern>/news</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>pages/main.jsp</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>by.itacademy.filters.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/Controller</url-pattern>
+    </filter-mapping>
 
 </web-app>

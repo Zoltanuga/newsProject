@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class AddNewsCommand implements Command {
 
-@Override
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         NewsService newsService = NewsService.getInstance();
         newsService.addNews(request.getParameter(PARAM_HEADER), request.getParameter(PARAM_TEXT_NEWS));

@@ -2,10 +2,15 @@ package by.itacademy.dao.database;
 
 
 import org.apache.commons.dbcp.BasicDataSource;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**+
+ * creates connection pull to database
+ * singleton
+ */
 public class ConnectionPool {
     private ResourceBundle connectionsParam = ResourceBundle.getBundle("DatabaseResources");
     private static ConnectionPool instance;

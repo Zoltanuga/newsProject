@@ -1,9 +1,7 @@
 package by.itacademy.filters;
 
 
-import by.itacademy.pojos.News;
 import by.itacademy.pojos.User;
-import by.itacademy.service.NewsService;
 import by.itacademy.service.UserService;
 
 import javax.servlet.*;
@@ -16,6 +14,9 @@ import java.util.List;
 import static by.itacademy.resources.Constants.*;
 
 public class AuthFilter implements Filter {
+
+    public static final String IS_AUTHORIZED_USER = "isAuthorizedUser";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -27,29 +28,30 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         List<User> users = userService.obtainUserList();
-        // boolean isAuthorizedUser = false;
         HttpSession session = req.getSession();
-        //session.setAttribute("isAuthorizedUser", false);
-
-        System.out.println("authfilter");
-        if (session.getAttribute("isAuthorizedUser") == null) {
-            for (User user : users) {
-                boolean isRegisteredEmail = user.getEmail().equals(req.getParameter(PARAM_EMAIL_INPUT));
-                boolean isRegisteredPassword = user.getPassword().equals(req.getParameter(PARAM_PASSWORD_INPUT));
-                if (isRegisteredEmail && isRegisteredPassword) {
-                    session.setAttribute("isAuthorizedUser", true);
-                    break;
-                } else {
-                    session.setAttribute("isAuthorizedUser", false);
+        boolean isFromRegisterFormEmail = request.getParameter(PARAM_EMAIL_REGISTER) != null;
+        boolean isFromRegisterFormPassword = request.getParameter(PARAM_PASSWORD_REGISTER) != null;
+        if (isFromRegisterFormEmail && isFromRegisterFormPassword) {
+            filterChain.doFilter(req, res);
+            session.setAttribute(IS_AUTHORIZED_USER, true);
+        } else {
+            if (session.getAttribute(IS_AUTHORIZED_USER) == null) {
+                for (User user : users) {
+                    boolean isRegisteredEmail = user.getEmail().equals(req.getParameter(PARAM_EMAIL_INPUT));
+                    boolean isRegisteredPassword = user.getPassword().equals(req.getParameter(PARAM_PASSWORD_INPUT));
+                    if (isRegisteredEmail && isRegisteredPassword) {
+                        session.setAttribute(IS_AUTHORIZED_USER, true);
+                        break;
+                    } else {
+                        session.setAttribute(IS_AUTHORIZED_USER, false);
+                    }
                 }
             }
-        }
-        if ((Boolean) session.getAttribute("isAuthorizedUser")) {
-            filterChain.doFilter(req, res);
-            System.out.println("Athorized");
-        } else {
-            res.sendRedirect("/news");
-            System.out.println("unAthorized");
+            if ((Boolean) session.getAttribute(IS_AUTHORIZED_USER) /*|| isRegistered*/) {
+                filterChain.doFilter(req, res);
+            } else {
+                res.sendRedirect("/news");
+            }
         }
     }
 

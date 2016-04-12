@@ -1,7 +1,9 @@
 package by.itacademy.controller;
 
 import by.itacademy.navigation.*;
+
 import static by.itacademy.resources.Constants.PARAM_COMMAND;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +24,7 @@ public class Controller extends HttpServlet {
 
     private void performAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String currentCommand = request.getParameter(PARAM_COMMAND);
-        by.itacademy.navigation.Command command = CommandFactory.getCommand(currentCommand.toUpperCase());
+        Command command = CommandFactory.getCommand(currentCommand.toUpperCase());
         String nextPage = command.execute(request, response);
         System.out.println("command  :" + currentCommand);
         if (!response.isCommitted()) {

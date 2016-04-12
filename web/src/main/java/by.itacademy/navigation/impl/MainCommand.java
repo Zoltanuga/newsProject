@@ -1,13 +1,11 @@
 package by.itacademy.navigation.impl;
 
 import by.itacademy.pojos.News;
-import by.itacademy.pojos.User;
 import by.itacademy.navigation.Command;
 
 import static by.itacademy.resources.Constants.*;
 
 import by.itacademy.service.NewsService;
-import by.itacademy.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +14,7 @@ import java.util.List;
 
 public class MainCommand implements Command {
 
-@Override
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
       /*  UserService userService = UserService.getInstance();
         List<User> users = userService.obtainUserList();
@@ -30,14 +28,14 @@ public class MainCommand implements Command {
             }
         }
         if (authorizedUser) {*/
-            NewsService newsService = NewsService.getInstance();
-            List<News> newsList = newsService.obtainNewsList();
-            request.setAttribute(PARAM_NEWS_LIST, newsList);
-            HttpSession session = request.getSession();
-            session.setAttribute(PARAM_EMAIL_INPUT, request.getParameter(PARAM_EMAIL_INPUT));
-            session.setAttribute(PARAM_PASSWORD_INPUT, request.getParameter(PARAM_PASSWORD_INPUT));
-    System.out.println("main command");
-            return NEWS_PAGE;
-      //  } else return MAIN_PAGE;
+        NewsService newsService = NewsService.getInstance();
+        List<News> newsList = newsService.obtainNewsList();
+        request.setAttribute(PARAM_NEWS_LIST, newsList);
+        HttpSession session = request.getSession();
+        session.setAttribute(PARAM_EMAIL_INPUT, request.getParameter(PARAM_EMAIL_INPUT));
+        session.setAttribute(PARAM_PASSWORD_INPUT, request.getParameter(PARAM_PASSWORD_INPUT));
+        System.out.println("main command");
+        return NEWS_PAGE;
+        //  } else return MAIN_PAGE;
     }
 }

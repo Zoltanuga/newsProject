@@ -1,9 +1,6 @@
 package by.itacademy.navigation;
 
-import by.itacademy.navigation.impl.AddNewsCommand;
-import by.itacademy.navigation.impl.ListNewsCommand;
-import by.itacademy.navigation.impl.MainCommand;
-import by.itacademy.navigation.impl.RedirectCommand;
+import by.itacademy.navigation.impl.*;
 
 public enum CommandsEnum {
     MAIN {
@@ -28,6 +25,12 @@ public enum CommandsEnum {
         @Override
         public Command createCommand() {
             return new RedirectCommand();
+        }
+    },
+    MAIN_REGISTER {
+        @Override
+        public Command createCommand() {
+            return new RegisterCommand();
         }
     };
 

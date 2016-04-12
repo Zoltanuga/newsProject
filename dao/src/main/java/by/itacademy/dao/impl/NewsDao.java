@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * +
+ * dao layer for news entities
+ * singleton
+ * this is bad-style code because of  transaction handling must be transfer to SERVICE layer!!
+ */
 public class NewsDao implements INewsDao {
     private static Logger log = Logger.getLogger(NewsDao.class);
     private ResourceBundle queries = ResourceBundle.getBundle("DatabaseResources");
@@ -27,24 +33,27 @@ public class NewsDao implements INewsDao {
     private NewsDao() {
     }
 
+    /**
+     * +
+     * add news to database
+     *
+     * @param news is News entities instance;
+     */
     @Override
     public void addNews(News news) {
         Connection connection = null;
-
-
         try {
             connection = connectionPool.getConnection();
-
             PreparedStatement prStatement = connection.prepareStatement(queries.getString("sqlInsertNews"));
             prStatement.setString(1, news.getHeader());
             prStatement.setDate(2, news.getDate());
             prStatement.setTime(3, news.getTime());
             prStatement.setString(4, news.getText());
             prStatement.executeUpdate();
-            //connection.commit();
+            connection.commit();
             log.info("success");
         } catch (SQLException e) {
-           try {
+            try {
                 if (connection != null) {
                     connection.rollback();
                 }
@@ -66,12 +75,17 @@ public class NewsDao implements INewsDao {
         }
     }
 
+    /**
+     * +
+     * gets news from database by ID
+     * @param id is the identification parameter for searching in database
+     * @return news  that must be find in database by ID (return Null-object if not found)
+     */
     @Override
     public News obtainNews(int id) {
         Connection connection = null;
         ResultSet result;
         List<News> newsList = new ArrayList<>();
-
         try {
             connection = connectionPool.getConnection();
             PreparedStatement prStatement = connection.prepareStatement(queries.getString("sqlSelectSimpleNews"));
@@ -79,7 +93,7 @@ public class NewsDao implements INewsDao {
             result = prStatement.executeQuery();
             newsList = initNews(result);
         } catch (SQLException e) {
-           try {
+            try {
                 if (connection != null) {
                     connection.rollback();
                 }
@@ -102,6 +116,12 @@ public class NewsDao implements INewsDao {
         return newsList.get(0);
     }
 
+    /**
+     * +
+     * get list of news
+     *
+     * @return list of news. If problem with database occurs  - will return empty list
+     */
     @Override
     public List<News> obtainListNews() {
         Connection connection = null;
@@ -135,7 +155,14 @@ public class NewsDao implements INewsDao {
         return newsList;
     }
 
-    public List<News> initNews(ResultSet result) throws SQLException {
+    /**
+     * +
+     * convert ResultSet to List of news-entities
+     * @param result is ResultSet returned as result of execution of query to database
+     * @return list of news-entities
+     * @throws SQLException
+     */
+    private List<News> initNews(ResultSet result) throws SQLException {
         List<News> newsList = new ArrayList<>();
         while (result.next()) {
             News news = new News();

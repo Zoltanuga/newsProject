@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ListNewsCommand implements Command {
 
-@Override
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-    System.out.println("list news command");
-    return ADD_NEWS_PAGE;
+        System.out.println("list news command");
+        return ADD_NEWS_PAGE;
     }
 }

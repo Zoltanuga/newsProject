@@ -13,12 +13,12 @@ import java.util.List;
 
 public class RedirectCommand implements Command {
 
-@Override
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         NewsService newsService = NewsService.getInstance();
         List<News> newsList = newsService.obtainNewsList();
         request.setAttribute(PARAM_NEWS_LIST, newsList);
-    System.out.println("redirect conmmand");
+        System.out.println("redirect conmmand");
         return NEWS_PAGE;
     }
 }
